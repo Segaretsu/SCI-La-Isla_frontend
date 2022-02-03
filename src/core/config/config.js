@@ -12,7 +12,7 @@ const devConf = Object.freeze({
 
 const prodConf = Object.freeze({
     // Información principal
-    APP_NAME: 'La Isla',
+    APP_NAME: 'La Isla S.A.S',
     // API
     API_ENDPOINT: 'http://localhost:8001',
     // URL de la app desplegada:

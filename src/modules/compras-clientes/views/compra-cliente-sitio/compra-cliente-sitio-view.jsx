@@ -4,9 +4,11 @@ import UTILS from '@core/utils/utils';
 import ProductosServices from '@productos/services/productos-services';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, ListGroup, Row, Table } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, ListGroup, Row, Table } from "react-bootstrap";
+import CompraValidator from './compra-cliente-sitio-validator';
 
 const CompraClienteView = (props) => {
+    const [errors, setErrors] = useState([]);
     const [listaProductos, setListaProductos] = useState([]);
     const [listaTipoFormaPago, setListaTipoFormaPago] = useState([]);
     const [productos, setProductos] = useState([]);
@@ -30,12 +32,33 @@ const CompraClienteView = (props) => {
     }, [])
 
     const registrarCompra = () => {
-        console.log({
-            compra: {
-                productos,
-                pagos,
+        const listaProductos = productos.map((producto) => {
+            return {
+                idProducto: producto.idProducto,
+                valorTotal: producto.precioVenta * producto.cantidad,
+                cantidad: producto.cantidad,
             }
-        })
+        });
+
+        const compra = {
+            productos: listaProductos,
+            pagos,
+            cliente: UTILS.getClienteAnonimo(),
+            empleado: UTILS.getEmpleadoAnonimo(),
+        };
+
+        const errorsValidator = CompraValidator.validate(compra);
+        setErrors(errorsValidator);
+        console.log(errorsValidator)
+        if (!Object.keys(errorsValidator).length) {
+            alert('Compra registrada con exito.');
+            // CompraClienteServices.registrarCompra(compra, (response) => {
+            //     if (response.status == 200 || response.status == 201) {
+            //         alert('Compra registrada con exito.');
+            //     }
+            // });
+        }
+
     }
 
     const addProducto = ({ target }) => {
@@ -74,18 +97,22 @@ const CompraClienteView = (props) => {
     }
 
     return (
-        <Container>
-            <h1>Esto es la pantalla de compras</h1>
-            <Col>
-                <Form.Select aria-label="Default select example" onChange={addProducto}>
-                    <option value="-1">Seleccione un producto</option>
-                    {listaProductos.map((producto) => {
-                        return (
-                            <option key={producto.idProducto} value={producto.idProducto}>{producto.nombreProducto}</option>
-                        );
-                    })}
-                </Form.Select>
-
+        <Container className='mt-5'>
+            <h1>Compras en sitio</h1>
+            <Col className='mt-3'>
+                <Row>
+                    <Col>
+                        <Form.Select aria-label="Default select example" onChange={addProducto}>
+                            <option value="-1">Seleccione un producto</option>
+                            {listaProductos.map((producto) => {
+                                return (
+                                    <option key={producto.idProducto} value={producto.idProducto}>{producto.nombreProducto}</option>
+                                );
+                            })}
+                        </Form.Select>
+                    </Col>
+                    <Col></Col>
+                </Row>
             </Col>
             <Col className="mt-4">
                 <Row>
@@ -135,6 +162,12 @@ const CompraClienteView = (props) => {
                                     </ListGroup.Item>
                                 );
                             })}
+                            {errors.productos
+                                &&
+                                <Alert variant='danger' className='mt-3'>
+                                    {errors.productos}
+                                </Alert>
+                            }
                         </ListGroup>
                     </Col>
                     <Col className="px-5">
@@ -211,8 +244,22 @@ const CompraClienteView = (props) => {
                                             setPagos([...listaPagos]);
                                         }
 
+                                        const handleChangeValorPago = (event) => {
+                                            const value = event.target.value;
+                                            const listaPagos = pagos;
+                                            listaPagos[index].valor = value;
+                                            setPagos([...listaPagos]);
+                                        }
+
+                                        const handleChangeNumeroComprobante = (event) => {
+                                            const value = event.target.value;
+                                            const listaPagos = pagos;
+                                            listaPagos[index].numeroComprobante = value;
+                                            setPagos([...listaPagos]);
+                                        }
+
                                         return (
-                                            <tr key={`${pago.numeroComprobante}-${index}`}>
+                                            <tr key={`pago-numero-${index}`}>
                                                 <td>
                                                     <Form.Select value={pago.idTipoFormaPago} aria-label={`Tipo Forma Pago ${index}`} onChange={changeFormaPago}>
                                                         <option value="-1">SELECCIONAR</option>
@@ -225,19 +272,32 @@ const CompraClienteView = (props) => {
                                                 </td>
                                                 <td>
                                                     {pago.idTipoFormaPago != 1
-                                                        && <input type="text" value={pago.numeroComprobante} />
-                                                        || "NN"
+                                                        &&
+                                                        <Form.Group controlId={`numeroComprobante${index}`}>
+                                                            <Form.Control type="text" placeholder="NN" value={pago.numeroComprobante} onChange={handleChangeNumeroComprobante} />
+                                                        </Form.Group>
+                                                        || <Form.Control plaintext readOnly defaultValue="NN" />
                                                     }
                                                 </td>
-                                                <td>{UTILS.formatoMoneda(pago.valor)}</td>
                                                 <td>
-                                                    <Button onClick={() => eliminarPago(index)} variant="outline-danger">Eliminar pago</Button>
+                                                    <Form.Group controlId={`valorPago${index}`}>
+                                                        <Form.Control type="number" placeholder="####" value={pago.valor} onChange={handleChangeValorPago} />
+                                                    </Form.Group>
+                                                </td>
+                                                <td>
+                                                    <Button onClick={() => eliminarPago(index)} variant="outline-danger">Eliminar</Button>
                                                 </td>
                                             </tr>
                                         );
                                     })}
                                 </tbody>
                             </Table>
+                            {errors.pagos
+                                &&
+                                <Alert variant='danger' className='mt-3'>
+                                    {errors.pagos}
+                                </Alert>
+                            }
                             <Col className="d-flex justify-content-center">
                                 <Button onClick={addPago} variant="outline-primary">Agregar pago</Button>
                             </Col>

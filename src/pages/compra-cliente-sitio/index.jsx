@@ -1,5 +1,5 @@
 import React from 'react';
-import CompraClienteView from '@compras-clientes/views/compra-cliente-view';
+import CompraClienteView from '@compras-clientes/views/compra-cliente-sitio/compra-cliente-sitio-view';
 
 
 const CompraClienteSitioPage = () => {
