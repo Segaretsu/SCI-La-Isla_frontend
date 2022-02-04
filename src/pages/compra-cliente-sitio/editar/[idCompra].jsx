@@ -1,6 +1,7 @@
 import React from 'react';
 import CompraClienteView from '@compras-clientes/views/compra-cliente-sitio/compra-cliente-sitio-view';
 import CompraClienteServices from '@compras-clientes/services/compra-cliente-services';
+import MainLayout from 'src/layouts/main-layout';
 
 
 export async function getServerSideProps(context) {
@@ -22,10 +23,12 @@ export async function getServerSideProps(context) {
 const CompraClienteSitioPage = (props) => {
     const compra = props.compra;
     return (
-        <CompraClienteView
-            isEditarCompra={true}
-            compraEditar={compra}
-        />
+        <MainLayout>
+            <CompraClienteView
+                isEditarCompra={true}
+                compraEditar={compra}
+            />
+        </MainLayout>
     );
 }
 

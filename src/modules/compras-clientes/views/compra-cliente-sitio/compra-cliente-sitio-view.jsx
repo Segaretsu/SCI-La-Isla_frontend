@@ -92,7 +92,7 @@ const CompraClienteView = (props) => {
 
     const addProducto = ({ target }) => {
         const { value } = target;
-        if (!productos.some((producto) => producto.idProducto == value)) {
+        if (!productos.some((producto) => producto.idProducto == value) && value != -1) {
             const productoEncontrado = listaProductos.find((producto) => producto.idProducto == value);
             const productoAgregar = {
                 ...productoEncontrado,
@@ -307,7 +307,6 @@ const CompraClienteView = (props) => {
                                             <tr key={`pago-numero-${index}`}>
                                                 <td>
                                                     <Form.Select value={pago.idTipoFormaPago} aria-label={`Tipo Forma Pago ${index}`} onChange={changeFormaPago}>
-                                                        <option value="-1">SELECCIONAR</option>
                                                         {listaTipoFormaPago.map((formaPago) => {
                                                             return (
                                                                 <option key={`${formaPago.nombre}-${index}`} value={formaPago.idTipoFormaPago}>{formaPago.nombre}</option>
