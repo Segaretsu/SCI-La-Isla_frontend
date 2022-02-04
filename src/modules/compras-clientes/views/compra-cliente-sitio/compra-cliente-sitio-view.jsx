@@ -3,11 +3,15 @@ import { APP_NAME, URL_COMERCIAL } from '@config';
 import UTILS from '@core/utils/utils';
 import ProductosServices from '@productos/services/productos-services';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Container, Form, ListGroup, Row, Table } from "react-bootstrap";
 import CompraValidator from './compra-cliente-sitio-validator';
 
 const CompraClienteView = (props) => {
+
+    const router = useRouter();
+
     const [errors, setErrors] = useState([]);
     const [listaProductos, setListaProductos] = useState([]);
     const [listaTipoFormaPago, setListaTipoFormaPago] = useState([]);
@@ -27,6 +31,11 @@ const CompraClienteView = (props) => {
                     setListaTipoFormaPago(response.data);
                 }
             });
+            if (props.isEditarCompra) {
+                const compraEditar = props.compraEditar;
+                setProductos(compraEditar.productos);
+                setPagos(compraEditar.pagos);
+            }
         }
         return () => mounted = false;
     }, [])
@@ -40,23 +49,43 @@ const CompraClienteView = (props) => {
             }
         });
 
-        const compra = {
-            productos: listaProductos,
-            pagos,
-            cliente: UTILS.getClienteAnonimo(),
-            empleado: UTILS.getEmpleadoAnonimo(),
-        };
+        let compra = {};
+
+        if (props?.isEditarCompra) {
+            compra = {
+                ...props.compraEditar,
+                productos: listaProductos,
+                pagos,
+                idCompra: props?.compraEditar?.idCompra,
+            }
+        } else {
+            compra = {
+                productos: listaProductos,
+                pagos,
+                cliente: UTILS.getClienteAnonimo(),
+                empleado: UTILS.getEmpleadoAnonimo(),
+            };
+        }
 
         const errorsValidator = CompraValidator.validate(compra);
         setErrors(errorsValidator);
-        console.log(errorsValidator)
         if (!Object.keys(errorsValidator).length) {
-            alert('Compra registrada con exito.');
-            // CompraClienteServices.registrarCompra(compra, (response) => {
-            //     if (response.status == 200 || response.status == 201) {
-            //         alert('Compra registrada con exito.');
-            //     }
-            // });
+            if (props?.isEditarCompra) {
+                console.log(compra)
+                CompraClienteServices.actualizarCompra(compra, (response) => {
+                    if (response.status == 200 || response.status == 201) {
+                        alert('Compra actualizada con exito.');
+                        router.push('/compras/resumen-compras');
+                    }
+                });
+            } else {
+                CompraClienteServices.registrarCompra(compra, (response) => {
+                    if (response.status == 200 || response.status == 201) {
+                        alert('Compra registrada con exito.');
+                        router.push('/compras/resumen-compras');
+                    }
+                });
+            }
         }
 
     }
@@ -217,6 +246,22 @@ const CompraClienteView = (props) => {
                                     })}
                                 </tbody>
                             </Table>
+                            <Col>
+                                <Col className="d-flex justify-content-end">
+                                    <h5>TOTAL NETO:</h5>
+                                </Col>
+                                <Col className="d-flex justify-content-end">
+                                    <h4>
+                                        {
+                                            productos.length > 0
+                                            && UTILS.formatoMoneda(productos
+                                                .map(producto => producto.cantidad * producto.precioVenta)
+                                                .reduce((total, valor) => total += valor))
+                                            || UTILS.formatoMoneda(0)
+                                        }
+                                    </h4>
+                                </Col>
+                            </Col>
 
                         </Col>
                         <Col>
@@ -300,20 +345,6 @@ const CompraClienteView = (props) => {
                             }
                             <Col className="d-flex justify-content-center">
                                 <Button onClick={addPago} variant="outline-primary">Agregar pago</Button>
-                            </Col>
-                        </Col>
-                        <Col>
-                            <Col className="d-flex justify-content-end">
-                                TOTAL NETO:
-                            </Col>
-                            <Col className="d-flex justify-content-end">
-                                {
-                                    productos.length > 0
-                                    && UTILS.formatoMoneda(productos
-                                        .map(producto => producto.cantidad * producto.precioVenta)
-                                        .reduce((total, valor) => total += valor))
-                                    || UTILS.formatoMoneda(0)
-                                }
                             </Col>
                         </Col>
                         <hr />

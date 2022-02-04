@@ -31,6 +31,13 @@ export default function Home() {
             </a>
           </Link>
 
+          <Link href="/compras/resumen-compras">
+            <a className={styles.card}>
+              <h2>Resumen compras &rarr;</h2>
+              <p>Encuentra aquí todas las compras realizadas por los clientes.</p>
+            </a>
+          </Link>
+
 
           {/* <a href="https://nextjs.org/learn" className={styles.card}>
             <h2>Learn &rarr;</h2>

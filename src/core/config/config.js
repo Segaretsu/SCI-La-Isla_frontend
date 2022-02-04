@@ -8,6 +8,10 @@ const devConf = Object.freeze({
     URL_COMERCIAL: 'http://localhost:4200',
     // Otras configuraciones
     LOCALE: "es-CO",
+    FECHA: {
+        FORMATO_FECHA: 'DD/MM/YYYY',
+        FORMATO_TIME: 'DD/MM/YYYY HH:mm',
+    }
 })
 
 const prodConf = Object.freeze({
@@ -20,6 +24,10 @@ const prodConf = Object.freeze({
     URL_COMERCIAL: 'http://localhost:4200',
     // Otras configuraciones
     LOCALE: "es-CO",
+    FECHA: {
+        FORMATO_FECHA: 'DD/MM/YYYY',
+        FORMATO_TIME: 'DD/MM/YYYY HH:mm',
+    }
 });
 
 
