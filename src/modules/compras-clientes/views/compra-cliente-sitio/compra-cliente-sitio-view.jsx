@@ -131,14 +131,20 @@ const CompraClienteView = (props) => {
             <Col className='mt-3'>
                 <Row>
                     <Col>
-                        <Form.Select aria-label="Default select example" onChange={addProducto}>
-                            <option value="-1">Seleccione un producto</option>
-                            {listaProductos.map((producto) => {
-                                return (
-                                    <option key={producto.idProducto} value={producto.idProducto}>{producto.nombreProducto}</option>
-                                );
-                            })}
-                        </Form.Select>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label htmlFor='buscadorProducto'>Buscar productos para añadir:</Form.Label>
+                            <Form.Select id="buscadorProducto" aria-label="Default select example" onChange={addProducto}>
+                                <option value="-1">Seleccione un producto</option>
+                                {listaProductos.map((producto) => {
+                                    return (
+                                        <option key={producto.idProducto} value={producto.idProducto}>{producto.nombreProducto}</option>
+                                    );
+                                })}
+                            </Form.Select>
+                            <Form.Text className="text-muted">
+                                Seleccione uno de los productos para añadirlo a la compra
+                            </Form.Text>
+                        </Form.Group>
                     </Col>
                     <Col></Col>
                 </Row>
