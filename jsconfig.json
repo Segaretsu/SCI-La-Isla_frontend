@@ -5,6 +5,7 @@
         "@config": ["src/core/config/config"],
         "@core/*": ["src/core/*"],
         "@layouts/*": ["src/layouts/*"],
+        "@styles/*": ["src/styles/*"],
         "@compras-clientes/*": ["src/modules/compras-clientes/*"],
         "@productos/*": ["src/modules/productos/*"]
       },

@@ -125,6 +125,10 @@ const CompraClienteView = (props) => {
         setPagos([...listaPago]);
     }
 
+    const goToHome = () => {
+        router.push('/');
+    }
+
     return (
         <Container className='mt-5'>
             <h1>Compras en sitio</h1>
@@ -357,7 +361,14 @@ const CompraClienteView = (props) => {
                 </Row>
             </Col>
             <Col className="mt-4 d-flex justify-content-end">
-                <Button variant="primary" onClick={registrarCompra}>Registrar compra</Button>
+                <Row>
+                    <Col>
+                        <Button variant="outline-danger" onClick={goToHome}>Cancelar</Button>
+                    </Col>
+                    <Col>
+                        <Button variant="primary" onClick={registrarCompra}>Registrar</Button>
+                    </Col>
+                </Row>
             </Col>
         </Container>
     );

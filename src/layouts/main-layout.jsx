@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from './footer';
 import Menu from './menu';
 
 const MainLayout = (props) => {
@@ -7,6 +8,7 @@ const MainLayout = (props) => {
         <>
             <Menu />
             {children}
+            <Footer />
         </>
     );
 }
