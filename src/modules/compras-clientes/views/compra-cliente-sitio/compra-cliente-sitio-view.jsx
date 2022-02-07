@@ -12,6 +12,7 @@ const CompraClienteView = (props) => {
 
     const router = useRouter();
 
+    const [devuelta, setDevuelta] = useState(0);
     const [errors, setErrors] = useState([]);
     const [listaProductos, setListaProductos] = useState([]);
     const [listaTipoFormaPago, setListaTipoFormaPago] = useState([]);
@@ -123,10 +124,24 @@ const CompraClienteView = (props) => {
         const listaPago = pagos;
         listaPago.splice(index, 1);
         setPagos([...listaPago]);
+        changeDevuelta();
     }
 
     const goToHome = () => {
         router.push('/');
+    }
+
+    const changeDevuelta = () => {
+        const sumaPagos = (pagos.length > 0) && pagos.map(pago => parseInt(pago.valor) || 0).reduce((suma, valor) => suma += valor) || 0;
+        const sumaProductos = (productos.length > 0) && productos.map(producto => producto.precioVenta * producto.cantidad).reduce((total, valor) => total += valor) || 0;
+        if(sumaPagos > sumaProductos) {
+            const devuelta = (sumaPagos - sumaProductos);
+            setDevuelta(devuelta);
+        } else if (sumaPagos == sumaProductos) {
+            setDevuelta(0);
+        } else {
+            setDevuelta('Monto pagado inferior');
+        }
     }
 
     return (
@@ -272,7 +287,6 @@ const CompraClienteView = (props) => {
                                     </h4>
                                 </Col>
                             </Col>
-
                         </Col>
                         <Col>
                             <Col>
@@ -304,6 +318,7 @@ const CompraClienteView = (props) => {
                                             const listaPagos = pagos;
                                             listaPagos[index].valor = value;
                                             setPagos([...listaPagos]);
+                                            changeDevuelta();
                                         }
 
                                         const handleChangeNumeroComprobante = (event) => {
@@ -354,6 +369,20 @@ const CompraClienteView = (props) => {
                             }
                             <Col className="d-flex justify-content-center">
                                 <Button onClick={addPago} variant="outline-primary">Agregar pago</Button>
+                            </Col>
+                        </Col>
+                        <Col>
+                            <Col className="d-flex justify-content-end">
+                                <h5>Devueltas:</h5>
+                            </Col>
+                            <Col className="d-flex justify-content-end">
+                                <h4>
+                                    {
+                                        pagos.length > 0
+                                        && UTILS.formatoMoneda(devuelta)
+                                        || UTILS.formatoMoneda(0)
+                                    }
+                                </h4>
                             </Col>
                         </Col>
                         <hr />

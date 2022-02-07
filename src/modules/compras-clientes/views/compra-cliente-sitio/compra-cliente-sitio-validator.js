@@ -26,8 +26,6 @@ function validarPagos(errors, compra) {
     console.log({ sumaPagos, sumaProductos });
     if (sumaPagos < sumaProductos) {
         errors.pagos = 'La suma de los pagos es inferior al importe total de la compra';
-    } else if (sumaPagos > sumaProductos) {
-        errors.pagos = 'La suma de los pagos es superior al importe total de la compra';
     }
 }
 
