@@ -11,7 +11,17 @@ const devConf = Object.freeze({
     FECHA: {
         FORMATO_FECHA: 'DD/MM/YYYY',
         FORMATO_TIME: 'DD/MM/YYYY HH:mm',
-    }
+    },
+    SEO: {
+        AUTOR: 'jhonsebastianas.com',
+        DESCRIPTION: `El almacén la isla es un almacén de variedades, donde se venden todo tipos de utilidades.`,
+        KEYWORDS: `Inventario, control de ventas, ventas en sitio`,
+        LARGE_TITLE: `La Isla: el almacén la isla es un almacén de variedades, donde se venden todo tipos de utilidades.`,
+        SITE_NAME: 'La Isla',
+        TITLE: 'La Isla',
+        TYPE: 'website',
+        URL: 'http://localhost:4200',
+    },
 })
 
 const prodConf = Object.freeze({
@@ -27,7 +37,17 @@ const prodConf = Object.freeze({
     FECHA: {
         FORMATO_FECHA: 'DD/MM/YYYY',
         FORMATO_TIME: 'DD/MM/YYYY HH:mm',
-    }
+    },
+    SEO: {
+        AUTOR: 'jhonsebastianas.com',
+        DESCRIPTION: `El almacén la isla es un almacén de variedades, donde se venden todo tipos de utilidades.`,
+        KEYWORDS: `Inventario, control de ventas, ventas en sitio`,
+        LARGE_TITLE: `La Isla: el almacén la isla es un almacén de variedades, donde se venden todo tipos de utilidades.`,
+        SITE_NAME: 'La Isla',
+        TITLE: 'La Isla',
+        TYPE: 'website',
+        URL: 'http://localhost:4200',
+    },
 });
 
 

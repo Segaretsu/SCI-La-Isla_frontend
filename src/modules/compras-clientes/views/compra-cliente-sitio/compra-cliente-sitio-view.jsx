@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Container, Form, ListGroup, Row, Table } from "react-bootstrap";
+import { StyledResumenCompra } from './compra-cliente-sitio-styles';
 import CompraValidator from './compra-cliente-sitio-validator';
 
 const CompraClienteView = (props) => {
@@ -134,7 +135,7 @@ const CompraClienteView = (props) => {
     const changeDevuelta = () => {
         const sumaPagos = (pagos.length > 0) && pagos.map(pago => parseInt(pago.valor) || 0).reduce((suma, valor) => suma += valor) || 0;
         const sumaProductos = (productos.length > 0) && productos.map(producto => producto.precioVenta * producto.cantidad).reduce((total, valor) => total += valor) || 0;
-        if(sumaPagos > sumaProductos) {
+        if (sumaPagos > sumaProductos) {
             const devuelta = (sumaPagos - sumaProductos);
             setDevuelta(devuelta);
         } else if (sumaPagos == sumaProductos) {
@@ -195,7 +196,7 @@ const CompraClienteView = (props) => {
                                     >
                                         <div className="ms-2 me-auto">
                                             <div className="fw-bold">{producto.nombreProducto}</div>
-                                            {producto.categoria}
+                                            <p className='text-capitalize'>{producto.categoria.toLowerCase()}</p>
                                             <p>{UTILS.formatoMoneda(valorTotal)}</p>
                                         </div>
                                         <div>
@@ -224,12 +225,12 @@ const CompraClienteView = (props) => {
                             }
                         </ListGroup>
                     </Col>
-                    <Col className="px-5">
+                    <StyledResumenCompra className='col' id="resumenCompra">
                         <Col>
-                            <Col className="d-flex justify-content-center">
-                                {APP_NAME}
+                            <Col className="d-flex justify-content-center fw-bold">
+                                <p>{APP_NAME}</p>
                             </Col>
-                            <Col className="d-flex justify-content-center">
+                            <Col className="d-flex justify-content-center fw-bold">
                                 {URL_COMERCIAL}
                             </Col>
                         </Col>
@@ -386,7 +387,7 @@ const CompraClienteView = (props) => {
                             </Col>
                         </Col>
                         <hr />
-                    </Col>
+                    </StyledResumenCompra>
                 </Row>
             </Col>
             <Col className="mt-4 d-flex justify-content-end">
