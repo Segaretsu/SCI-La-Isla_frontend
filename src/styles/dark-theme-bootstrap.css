@@ -1,0 +1,32 @@
+/*======= FORMS =======*/
+
+.dark-theme .form-select {
+    background-color: var(--input-color);
+    color: var(--text-color);
+}
+
+.dark-theme .form-control {
+    background-color: var(--input-color);
+    color: var(--text-color);
+}
+
+.dark-theme .form-control-plaintext {
+    background-color: var(--input-color);
+    color: var(--text-color);
+}
+
+/*======= LISTS =======*/
+
+.dark-theme .list-group-item {
+    background-color: var(--input-color);
+    color: var(--text-color);
+}
+
+/*======= TABLE =======*/
+.dark-theme .table {
+    color: var(--text-color);
+}
+
+.dark-theme .table-striped>tbody>tr:nth-of-type(odd)>* {
+    color: var(--text-color);
+}
