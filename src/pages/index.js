@@ -39,6 +39,19 @@ export default function Home() {
               </a>
             </Link>
           </div>
+          <p className={styles.description}>
+            Comienza a gestionar productos en {' '}
+            <code className={styles.code}>productos</code>
+          </p>
+
+          <div className={styles.grid}>
+            <Link href="/productos/registrar">
+              <a className={styles.card}>
+                <h2>Registrar nuevo producto &rarr;</h2>
+                <p>Registra los nuevos productos que empiezas a vender en tu local.</p>
+              </a>
+            </Link>
+          </div>
         </main>
       </div>
     </MainLayout>
