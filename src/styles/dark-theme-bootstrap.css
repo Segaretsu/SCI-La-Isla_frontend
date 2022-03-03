@@ -30,3 +30,9 @@
 .dark-theme .table-striped>tbody>tr:nth-of-type(odd)>* {
     color: var(--text-color);
 }
+
+/*======= MODAL =======*/
+.dark-theme .modal-content {
+    background-color: var(--input-color);
+    color: var(--text-color);
+}

@@ -1,0 +1,25 @@
+/* Sin seleccionar*/
+.dark-theme .react-select__dark_theme .css-1s2u09g-control {
+    background-color: var(--input-color) !important;
+    color: var(--text-color) !important;
+}
+
+.dark-theme .react-select__dark_theme .css-qc6sy-singleValue {
+    color: var(--text-color) !important;
+}
+
+/* Seleccionado */
+.dark-theme .react-select__dark_theme .css-1pahdxg-control {
+    background-color: var(--input-color) !important;
+    color: var(--text-color) !important;
+}
+
+.dark-theme .react-select__dark_theme .css-26l3qy-menu {
+    background-color: var(--input-color) !important;
+    color: var(--text-color) !important;
+}
+
+/* Escribiendo */
+.dark-theme .react-select__dark_theme .css-1pndypt-Input {
+    color: var(--text-color) !important;
+}

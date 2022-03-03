@@ -6,6 +6,7 @@ import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import { FECHA } from '@config';
 import UTILS from '@core/utils/utils';
 import { useRouter } from 'next/router';
+import ModalConfirmarAccion from 'src/modules/commons/components/modal-confirmar-accion/modal-confirmar-accion';
 
 const ResumenComprasView = () => {
 
@@ -83,7 +84,13 @@ const ResumenComprasView = () => {
                                             <Button onClick={() => goToModificarCompra(compra.idCompra)} variant='outline-warning'>Modificar</Button>
                                         </Col>
                                         <Col>
-                                            <Button onClick={() => eliminarCompra(compra.idCompra)} variant='outline-danger'>Eliminar</Button>
+                                            <ModalConfirmarAccion 
+                                                accion='Eliminar compra'
+                                                variant='outline-danger'
+                                                buttonMessage='Eliminar'
+                                                onClickExito={() => eliminarCompra(compra.idCompra)}
+                                            />
+                                            {/* <Button onClick={() => eliminarCompra(compra.idCompra)} variant='outline-danger'>Eliminar</Button> */}
                                         </Col>
                                     </Row>
                                 </td>

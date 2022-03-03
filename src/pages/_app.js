@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Head from 'next/head';
 import '../styles/globals.css';
 import '../styles/dark-theme-bootstrap.css';
+import '../styles/dark-theme-react-select.css';
 
 function MyApp({ Component, pageProps }) {
   const { AUTOR, DESCRIPTION, KEYWORDS, LARGE_TITLE, SITE_NAME, TITLE, TYPE, URL } = SEO;

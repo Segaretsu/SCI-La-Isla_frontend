@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Container, Form, ListGroup, Row, Table } from "react-bootstrap";
+import Select from 'react-select';
 import { StyledResumenCompra } from './compra-cliente-sitio-styles';
 import CompraValidator from './compra-cliente-sitio-validator';
 
@@ -25,6 +26,11 @@ const CompraClienteView = (props) => {
         if (mounted) {
             ProductosServices.getAllProductos((response) => {
                 if (response.status == 200 || response.status == 201) {
+                    const seleccionarElemento = {
+                        nombreProducto: 'Seleccione un producto',
+                        idProducto: '-1',
+                    }
+                    response.data.unshift(seleccionarElemento);
                     setListaProductos(response.data);
                 }
             });
@@ -37,6 +43,7 @@ const CompraClienteView = (props) => {
                 const compraEditar = props.compraEditar;
                 setProductos(compraEditar.productos);
                 setPagos(compraEditar.pagos);
+                changeDevueltaEditar(compraEditar.pagos, compraEditar.productos);
             }
         }
         return () => mounted = false;
@@ -92,8 +99,8 @@ const CompraClienteView = (props) => {
 
     }
 
-    const addProducto = ({ target }) => {
-        const { value } = target;
+    const addProducto = (productoSeleccionado) => {
+        const value = productoSeleccionado.value;
         if (!productos.some((producto) => producto.idProducto == value) && value != -1) {
             const productoEncontrado = listaProductos.find((producto) => producto.idProducto == value);
             const productoAgregar = {
@@ -145,22 +152,36 @@ const CompraClienteView = (props) => {
         }
     }
 
+    const changeDevueltaEditar = (pagosEditar, productoEditar) => {
+        const sumaPagos = (pagosEditar.length > 0) && pagosEditar.map(pago => parseInt(pago.valor) || 0).reduce((suma, valor) => suma += valor) || 0;
+        const sumaProductos = (productoEditar.length > 0) && productoEditar.map(producto => producto.precioVenta * producto.cantidad).reduce((total, valor) => total += valor) || 0;
+        if (sumaPagos > sumaProductos) {
+            const devuelta = (sumaPagos - sumaProductos);
+            setDevuelta(devuelta);
+        } else if (sumaPagos == sumaProductos) {
+            setDevuelta(0);
+        } else {
+            setDevuelta('Monto pagado inferior');
+        }
+    }
+
     return (
         <Container className='mt-5'>
             <h1>Compras en sitio</h1>
             <Col className='mt-3'>
                 <Row>
                     <Col>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="buscadorProducto">
                             <Form.Label htmlFor='buscadorProducto'>Buscar productos para añadir:</Form.Label>
-                            <Form.Select id="buscadorProducto" aria-label="Default select example" onChange={addProducto}>
-                                <option value="-1">Seleccione un producto</option>
-                                {listaProductos.map((producto) => {
-                                    return (
-                                        <option key={producto.idProducto} value={producto.idProducto}>{producto.nombreProducto}</option>
-                                    );
+                            <Select
+                                className='react-select__dark_theme'
+                                id="buscadorProducto"
+                                options={listaProductos.map((producto) => {
+                                    return { label: producto.nombreProducto, value: producto.idProducto }
                                 })}
-                            </Form.Select>
+                                onChange={addProducto}
+                                placeholder='Seleccione un producto'
+                            />
                             <Form.Text className="text-muted">
                                 Seleccione uno de los productos para añadirlo a la compra
                             </Form.Text>
