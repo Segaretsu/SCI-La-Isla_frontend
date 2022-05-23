@@ -113,6 +113,7 @@ const CompraClienteView = (props) => {
             ];
             setProductos(newProductos);
         }
+        changeDevuelta();
     }
 
     const addPago = () => {
@@ -203,11 +204,13 @@ const CompraClienteView = (props) => {
                                         producto,
                                     ];
                                     setProductos([...new Set(lista)]);
+                                    changeDevuelta();
                                 }
 
                                 const deleteProducto = (idProducto) => {
                                     const lista = productos.filter(producto => producto.idProducto != idProducto);
                                     setProductos(lista);
+                                    changeDevuelta();
                                 }
 
                                 return (
