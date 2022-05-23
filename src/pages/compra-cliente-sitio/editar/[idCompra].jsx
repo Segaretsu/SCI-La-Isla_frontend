@@ -4,7 +4,7 @@ import CompraClienteServices from '@compras-clientes/services/compra-cliente-ser
 import MainLayout from 'src/layouts/main-layout';
 
 
-export async function getInitialProps(context) {
+export async function getServerSideProps(context) {
 
     const compraRequest = CompraClienteServices.getCompraByIdCompra(context?.params?.idCompra);
 
