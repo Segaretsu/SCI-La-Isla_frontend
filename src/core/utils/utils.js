@@ -17,14 +17,14 @@ function formatoMoneda(valor) {
 function getClienteAnonimo() {
     return {
         'idTipoDocumento': 1,
-        'numeroDocumento': 'N000000000',
+        'numeroDocumento': '0000000000',
     };
 }
 
 function getEmpleadoAnonimo() {
     return {
         'idTipoDocumento': 1,
-        'numeroDocumento': 'N000000000',
+        'numeroDocumento': '0000000000',
     };
 }
 
