@@ -26,9 +26,9 @@ const devConf = Object.freeze({
 
 const prodConf = Object.freeze({
     // Información principal
-    APP_NAME: 'La Isla S.A.S',
+    APP_NAME: 'Galle Motos',
     // API
-    API_ENDPOINT: 'https://inventario-test-jsas.herokuapp.com',
+    API_ENDPOINT: 'https://galle-motos.herokuapp.com',
     // URL de la app desplegada:
     URL_APP: 'https://inventario-jsas.vercel.app',
     URL_COMERCIAL: 'https://inventario-jsas.vercel.app',
@@ -40,11 +40,11 @@ const prodConf = Object.freeze({
     },
     SEO: {
         AUTOR: 'jhonsebastianas.com',
-        DESCRIPTION: `El almacén la isla es un almacén de variedades, donde se venden todo tipos de utilidades.`,
-        KEYWORDS: `Inventario, control de ventas, ventas en sitio`,
-        LARGE_TITLE: `La Isla: el almacén la isla es un almacén de variedades, donde se venden todo tipos de utilidades.`,
-        SITE_NAME: 'La Isla',
-        TITLE: 'La Isla',
+        DESCRIPTION: `Galle motos`,
+        KEYWORDS: `Galle, motos, ventas en sitio`,
+        LARGE_TITLE: `Galle motos`,
+        SITE_NAME: 'Galle motos',
+        TITLE: 'Galle motos',
         TYPE: 'website',
         URL: 'https://inventario-jsas.vercel.app',
     },
